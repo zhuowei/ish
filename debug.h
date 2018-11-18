@@ -9,6 +9,8 @@ void vprintk(const char *msg, va_list args);
 // debug output utilities
 // save me
 
+#define DEBUG_strace 1
+
 #ifndef DEBUG_all
 #define DEBUG_all 0
 #endif
