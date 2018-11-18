@@ -144,7 +144,7 @@ void handle_interrupt(int interrupt) {
         int syscall_num = cpu->eax;
         if (syscall_num >= NUM_SYSCALLS || syscall_table[syscall_num] == NULL) {
             printk("%d missing syscall %d\n", current->pid, syscall_num);
-            send_signal(current, SIGSYS_);
+            cpu->eax = _ENOSYS;
         } else {
             STRACE("%d call %-3d ", current->pid, syscall_num);
             int result = syscall_table[syscall_num](cpu->ebx, cpu->ecx, cpu->edx, cpu->esi, cpu->edi, cpu->ebp);
