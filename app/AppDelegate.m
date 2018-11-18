@@ -46,9 +46,9 @@ static void ios_handle_exit(int code) {
         return err;
     
     create_first_process();
-    char *program = "/bin/login";
-    char *argv[] = {program, "-f", "root", NULL};
-    char *envp[] = {"TERM=xterm-256color", NULL};
+    char *program = "/bin/bash";
+    char *argv[] = {program, "-l", NULL};
+    char *envp[] = {"TERM=xterm-256color", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", NULL};
     err = sys_execve(program, argv, envp);
     if (err < 0)
         return err;
