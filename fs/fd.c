@@ -197,6 +197,8 @@ dword_t sys_dup2(fd_t f, fd_t new_f) {
     return new_f;
 }
 
+#define F_SETLK64_ 13
+
 dword_t sys_fcntl64(fd_t f, dword_t cmd, dword_t arg) {
     struct fdtable *table = current->files;
     struct fd *fd = f_get(f);
@@ -232,7 +234,9 @@ dword_t sys_fcntl64(fd_t f, dword_t cmd, dword_t arg) {
                 return 0;
             }
             return fd->ops->setflags(fd, arg);
-
+        case F_SETLK64_:
+            STRACE("fcntl(%d, F_SETLK64): ignoring", f, cmd);
+            return 0;
         default:
             STRACE("fcntl(%d, %d)", f, cmd);
             return _EINVAL;
