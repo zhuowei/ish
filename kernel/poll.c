@@ -55,7 +55,8 @@ dword_t sys_select(fd_t nfds, addr_t readfds_addr, addr_t writefds_addr, addr_t 
     for (fd_t i = 0; i < nfds; i++) {
         if (bit_test(i, readfds) || bit_test(i, writefds) || bit_test(i, exceptfds)) {
             if (fd != -1)
-                TODO("select with multiple fds");
+                break; // hack: just poll on the first FD, then
+                //TODO("select with multiple fds");
             fd = i;
             if (bit_test(i, readfds))
                 types |= POLL_READ;
